@@ -87,6 +87,7 @@ public class PhotoSelectDialog {
         dialogView = View.inflate(context, R.layout.select_photo_dialog, null);
         check = $(R.id.check);
         edit = $(R.id.edit);
+        edit.setVisibility(View.GONE);
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
