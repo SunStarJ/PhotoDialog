@@ -23,8 +23,17 @@ public class PhotoSelectDialog {
     private Context context;
     private View dialogView;
     private TextView check;
+    private TextView edit;
     private PhotoSelectCheckListener listener;
+    private PhotoEditListener editListener;
     private String imgPath;
+
+
+
+
+    public interface PhotoEditListener{
+        void edit();
+    }
 
     public interface PhotoSelectCheckListener {
         void check();
@@ -77,6 +86,7 @@ public class PhotoSelectDialog {
     private void initView() {
         dialogView = View.inflate(context, R.layout.select_photo_dialog, null);
         check = $(R.id.check);
+        edit = $(R.id.edit);
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,11 +121,32 @@ public class PhotoSelectDialog {
                 dialog = null;
             }
         });
+        $(R.id.edit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(editListener!=null){
+                    editListener.edit();
+                }
+                dialog.dismiss();
+                dialog = null;
+            }
+        });
         if(imgPath==null||imgPath.equals("")){
             hidenCheck();
         }
     }
 
+    public void showEdit(){
+        edit.setVisibility(View.VISIBLE);
+    }
+
+    public void hideEdit(){
+        edit.setVisibility(View.GONE);
+    }
+
+    public void initEditListener(PhotoEditListener listener){
+        editListener = listener;
+    }
 
     private <T extends View> T $(int id) {
         return (T) dialogView.findViewById(id);
